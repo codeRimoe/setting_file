@@ -1,0 +1,103 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Author: Rimon
+"Version: V5.0
+"Mail: negatronljl@gmail.com
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"颜色设置
+set t_Co=256      "颜色支援
+syntax on         "语法高亮
+color ron         "高亮样式
+set cursorline    "当前行高亮
+set hlsearch      "搜索词高亮
+
+"高亮自定义
+hi CursorLine cterm=none ctermbg=DarkMagenta ctermfg=none
+hi Search cterm=underline ctermbg=none ctermfg=none
+
+"基本设置
+set modelines=0		" CVE-2007-2438
+set history=700     "历史记录条数
+set shortmess=atI
+set confirm
+
+"禁用vi兼容
+set nocompatibley
+
+"tab bacespace space扩展
+set expandtab       "扩展tab
+set backspace=2		"backspace扩展
+set tabstop=4       "tab长
+set softtabstop=4   "虚拟tab
+set shiftwidth=4    "缩进宽度
+
+"文件类型与缩进
+filetype on                  "检查文件类型
+filetype indent on           "不同文件不同缩进
+filetype plugin on           "允许插件
+filetype plugin indent on    "自动补全
+set autoindent               "自动缩进
+set smartindent              "智能缩进
+set cindent                  "自动缩排
+
+"备份：不可用
+"set backup
+"set backupext=.bkmoe
+"set backupdir=~/public/code/backup/
+
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
+" Don't write backup file if vim is being called by "chpass"
+au BufWrite /private/etc/pw.* set nowritebackup nobackup
+
+"搜索
+set nowrapscan  "禁止循环搜索
+set incsearch   "输入即搜索
+set smartcase   "智能忽略大小写
+
+set magic
+set hidden
+
+"状态栏
+set laststatus=2
+set statusline=Rimoe喵~:%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\%{&ff},\%{strlen(&filetype)?&filetype:'plain'}]%#filesize#%{FileSize()}%{IsBinary()}%=%#position#%l/%L:%c\ [%03p%%]
+"色彩
+hi filepath cterm=none ctermbg=238 ctermfg=40
+hi filetype cterm=none ctermbg=238 ctermfg=45
+hi filesize cterm=none ctermbg=238 ctermfg=225
+hi position cterm=none ctermbg=238 ctermfg=228
+"检查二进制
+function IsBinary()
+	if (&binary==0)
+		return ""
+	else
+		return "[Binary]"
+	endif
+endfunction
+"文件大小显示
+function FileSize()
+	let bytes=getfsize(expand("%:p"))
+	if bytes<=0
+		return "[Empty~poi~]"
+	elseif bytes<1024
+		return "[".bytes."Byte~poi~]"
+    elseif bytes<1024*1024
+		return "[".(bytes/1024)."KB~poi~]"
+	elseif bytes<1024*1024*1024
+		return "[".(bytes/1024/1024)."MB~poi~]"
+	else
+		return "[".(bytes/1024/1024/1024)."GB~poi~]"
+	endif
+endfunction
+
+"折叠
+set foldenable
+set foldmethod=indent
+set foldcolumn=1
+
+"显示
+set scrolloff=5     "光标上下最小行数
+set ruler           "显示当前行列号
+set number          "行号
+set showcmd         "状态栏显示正在输入的命令
+set showmode        "左下显示当前vim模式  
